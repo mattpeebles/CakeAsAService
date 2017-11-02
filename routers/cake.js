@@ -23,7 +23,7 @@ cakeRouter.post('/', (req, res) => {
 		if(data.possible){
 			let {base, logo} = data.dimensions
 			let topLeft = centerLogo(base, logo)
-			res.json(topLeft)
+			return res.json(topLeft)
 		}
 		else{
 			res.status(400).end()
