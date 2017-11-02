@@ -1,0 +1,25 @@
+{
+  "name": "cake-service",
+  "version": "1.0.0",
+  "description": "cake as a service api design",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "nodemon server.js"
+  },
+  "author": "matt peebles <peebles.mm@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^4.0.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "http": "0.0.0",
+    "https": "^1.0.0",
+    "image-size": "^0.6.1",
+    "url": "^0.11.0"
+  }
+}
