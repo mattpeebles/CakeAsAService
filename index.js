@@ -12,42 +12,47 @@ function getSizeFromImageUrl(imageUrl){
 		if(protocolType == 'http:'){
 			return http.get(imgUrl, (res) => {
 				let chunks = [];
+				let kbDownloaded = 0;
 				res.on('data', (chunk) => {
+					kbDownloaded += Buffer.byteLength(chunk)
 					chunks.push(chunk)
-				})
-				.on('end', () => {
-					let buffer = Buffer.concat(chunks)
-					let dimensions = sizeOf(buffer)
-					let {height, width} = dimensions
 					
-					let area = calculateArea(width, height)
+					if(kbDownloaded >= 3000){
+						let buffer = Buffer.concat(chunks)
+						let dimensions = sizeOf(buffer)
+						let {height, width} = dimensions
+						
+						let area = calculateArea(width, height)
 
-					return resolve({
-						width,
-						height,
-						area	
-					})
+						return resolve({
+							width,
+							height,
+							area	
+						})
+					}
 				})
 			})
 		} else{
 			return https.get(imgUrl, (res) => {
 				let chunks = [];
+				let kbDownloaded = 0;
 				res.on('data', (chunk) => { 
+					kbDownloaded += Buffer.byteLength(chunk)
 					chunks.push(chunk)
-				})
-				.on('end', () => {
-					let buffer = Buffer.concat(chunks)
-					console.log(Buffer.byteLength(buffer))
-					let dimensions = sizeOf(buffer)
-					let {height, width} = dimensions
 					
-					let area = calculateArea(width, height)
+					if(kbDownloaded >= 3000){
+						let buffer = Buffer.concat(chunks)
+						let dimensions = sizeOf(buffer)
+						let {height, width} = dimensions
+						
+						let area = calculateArea(width, height)
 
-					return resolve({
-						height,
-						width,
-						area	
-					});
+						return resolve({
+							width,
+							height,
+							area	
+						})
+					}
 				})
 			})
 		}
@@ -124,7 +129,7 @@ function calculateTopLeftXPos(baseWidth, logoWidth){
 function calculateTopLeftYPos(baseHeight, logoHeight){
 	let heightDifference = baseHeight - logoHeight
 
-	let yPos = heightDifference/2 + logoHeight
+	let yPos = heightDifference/2
 
 	return yPos
 }
@@ -151,9 +156,9 @@ function centerLogo(base, logo){
 
 function checkIfCentered(topX, topY, base, logo){
 	let topLeft = {x: topX, y: topY}
-		bottomLeft = {x: topLeft.x, y: topLeft.y - logo.height},
+		bottomLeft = {x: topLeft.x, y: topLeft.y + logo.height},
 		topRight = {x: topLeft.x + logo.width, y: topLeft.y},
-		bottomRight = {x: topLeft.x + logo.width, y: topLeft.y - logo.height};
+		bottomRight = {x: topLeft.x + logo.width, y: topLeft.y + logo.height};
 
 	let areaAboveLogo = calculateArea(base.width, base.height - topLeft.y),
 		areaBelowLogo = calculateArea(base.width, bottomLeft.y);
