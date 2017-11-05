@@ -1,12 +1,29 @@
 const express = require('express')
 const app = express()
 
+const {PORT: port} = require('./config')
+
 const cakeRoute = require('./routers/cake')
 
 app.use('/api/design-a-cake', cakeRoute)
 
 app.use(express.static('public'))
 
-app.listen(3000, () => {
-	console.log('Server is open on port 3000')
-})
+let server;
+
+function runServer(){
+	server = app.listen(port, () => {
+		console.log(`App is listening on port ${port}`)
+	})
+}
+
+function closeServer(){
+	console.log('Closing server')
+	server.close()
+}
+
+if(require.main === module){
+	runServer().catch(err => console.error(err))
+}
+
+module.exports = {app, runServer, closeServer}

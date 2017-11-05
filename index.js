@@ -88,7 +88,7 @@ function canContain(base, logo){
 			.then(baseDimensions => {
 				getLogoImageSize
 					.then(logoDimensions => {
-				
+						
 						let dimensions = {
 							base: baseDimensions,
 							logo: logoDimensions
@@ -146,15 +146,15 @@ function centerLogo(base, logo){
 	let x = calculateTopLeftXPos(base.width, logo.width),
 		y = calculateTopLeftYPos(base.height, logo.height);
 
-	if(checkIfCentered(x, y, base, logo)){
-		return {
+	if(isCentered(x, y, base, logo)){
+		return { 
 			x: Math.floor(x),
 			y: Math.floor(y)
 		}
 	}
 }
 
-function checkIfCentered(topX, topY, base, logo){
+function isCentered(topX, topY, base, logo){
 	let topLeft = {x: topX, y: topY}
 		bottomLeft = {x: topLeft.x, y: topLeft.y + logo.height},
 		topRight = {x: topLeft.x + logo.width, y: topLeft.y},
@@ -182,5 +182,5 @@ module.exports = {
 	calculateTopLeftXPos,
 	calculateTopLeftYPos,
 	rotateImage,
-	checkIfCentered
+	isCentered
 }

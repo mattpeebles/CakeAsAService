@@ -4,7 +4,7 @@ const cakeRouter = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-const {canContain, centerLogo} = require('../index.js')
+const {canContain, centerLogo, combineBaseAndLogo} = require('../index.js')
 
 cakeRouter.use(jsonParser);
 
@@ -21,8 +21,8 @@ cakeRouter.post('/', (req, res) => {
 
 	canContain(base, logo).then(data => {
 		if(data.possible){
-			let {base, logo} = data.dimensions
-			let topLeft = centerLogo(base, logo)
+			let {base: baseDimensions, logo: logoDimensions} = data.dimensions
+			let topLeft = centerLogo(baseDimensions, logoDimensions)
 			return res.json(topLeft)
 		}
 		else{

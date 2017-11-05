@@ -3,7 +3,7 @@ const chaiPromise = require('chai-as-promised')
 const {expect, should, assert} = chai;
 chai.use(chaiPromise)
 
-const {	canContain, centerLogo, getSizeFromImageUrl, getSizeFromImage, checkIfCentered,
+const {	canContain, centerLogo, getSizeFromImageUrl, getSizeFromImage, isCentered,
 	calculateArea, calculateTopLeftXPos, calculateTopLeftYPos, rotateImage} = require('../index');
 
 let image1Url = 'http://media.salon.com/2015/04/shutterstock_187788812.jpg',
@@ -123,12 +123,12 @@ describe('Index', () => {
 		})
 	})
 
-	describe('checkIfCentered', () => {
+	describe('isCentered', () => {
 		it('should return true if logo is centered', () => {
 			let x = calculateTopLeftXPos(image1Dimension.width, image2Dimension.width),
 				y = calculateTopLeftYPos(image1Dimension.height, image2Dimension.height);
 
-			expect(checkIfCentered(x, y, image1Dimension, image2Dimension)).to.be.equal(true)
+			expect(isCentered(x, y, image1Dimension, image2Dimension)).to.be.equal(true)
 		})
 	})
 
