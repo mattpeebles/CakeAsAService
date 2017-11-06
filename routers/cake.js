@@ -22,6 +22,7 @@ cakeRouter.post('/', (req, res) => {
 	canContain(base, logo).then(data => {
 		if(data.possible){
 			let {base: baseDimensions, logo: logoDimensions} = data.dimensions
+
 			let topLeft = centerLogo(baseDimensions, logoDimensions)
 			return res.json(topLeft)
 		}

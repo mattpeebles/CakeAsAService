@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 
 import ImageForm from './components/form'
 import ImageContainer from './components/image'
+import Canvas from './components/canvas'
 
 import logo from './logo.svg';
 import './App.css';
@@ -11,9 +12,13 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      topLeft: {},
+      topLeft: null,
       baseImageSrc: null,
-      logoImageSrc: null
+      logoImageSrc: null,
+      baseDimensions: null,
+      logoDimensions: null,
+      canvas: false,
+      updatedCanvas: false
     }
   }
 
@@ -43,7 +48,17 @@ class App extends Component {
     }
   }
 
+  updateImageDimensions(type, dimensions){
+    if(type === 'base'){
+      this.setState({baseDimensions: dimensions})
+    }
+    else if(type === 'logo'){
+      this.setState({logoDimensions: dimensions})
+    }
+  }
+
   getTopLeftCoordinate(){
+     console.log(this.state)
      fetch('http://localhost:3030/api/design-a-cake', {
         method: 'POST',
         headers: {
@@ -61,17 +76,34 @@ class App extends Component {
       })
   }
 
+
+
   render() {
 
     let baseImage,
-        logoImage;
+        logoImage,
+        combinedImage;
 
     if(this.state.baseImageSrc){
-      baseImage = <ImageContainer src={this.state.baseImageSrc} id="base" alt="baseImage"/>
+      baseImage = 
+        <ImageContainer 
+          src={this.state.baseImageSrc} 
+          updateDimensions={this.updateImageDimensions.bind(this)}
+          id="base" alt="baseImage"
+        />
     }
 
     if(this.state.logoImageSrc){
-      logoImage = <ImageContainer src={this.state.logoImageSrc} id="logo" alt="logoImage"/>
+      logoImage = 
+        <ImageContainer 
+          src={this.state.logoImageSrc} 
+          updateDimensions={this.updateImageDimensions.bind(this)}
+          id="logo" alt="logoImage"
+        />
+    }
+
+    if(this.state.topLeft && this.state.baseDimensions && this.state.logoDimensions && !this.state.canvas){
+      combinedImage = <Canvas baseDimensions={this.state.baseDimensions} topLeft={this.state.topLeft}/>
     }
 
     return (
@@ -80,9 +112,13 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <ImageForm getCoordinate={this.getTopLeftCoordinate.bind(this)} updateSrc={this.updateImageSrc.bind(this)}/>
+        <ImageForm 
+            getCoordinate={this.getTopLeftCoordinate.bind(this)} 
+            updateSrc={this.updateImageSrc.bind(this)}
+        />
         {baseImage}
         {logoImage}
+        {combinedImage}
       </div>
     );
   }
