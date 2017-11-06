@@ -1,2 +1,9 @@
 language: node_js
 node_js: node
+deploy:
+  provider: heroku
+  api_key:
+    secure: XK/L5dfoJI/R5/cl4h8tgJ87BeN5ndeum9i2S4m2JNVySETtta8zI95ANFGKq/n3mRD0xMKFpKCFg03ECJ2cxxHMKZjAQdI7bVaqz7RwGT4BTxzjmd1/4yjT2Js1tLmafORGd+6DLOOqyoOXCMiYbGKrV6zZ9TvSPf6oV3aBSIcU/b4A5zFEnxD5LV5e7OlQT34JWlr2rawnh6K5YmaxEnntr9B6MxTkGMlFN+mwP2tWQi5wfsnw0PTBCEGaudy+QUM4M5cKF3MsegKzb3/eBtRl8uYzQMiXBvNEWvvCDMGS9fq+rPu2MNPef11/ChCheMEeGJkcaZ/9pHmfAwd3kIB8/pSPe/AaKJt10FUXGPlIAFBWPuD8daeY2dhr3DvtJ1Lc70BYVt91HJHs2mHKe3CVZIQCGqkFLXWsqyAQ9sXYf1eyQKtBfevdaNJFYWkYsLzVKJqck/eNYhijtLJNrWhiGahu3qmPv2YooxDOT/cIb7VjtpaDyaemJOQ1HPg2WfRs5rGuDvp2ulqJfYqqu1FIm51zA4pO1Vjp9ktT8+QxhUBBkoy4Vai6mHGRGmY4IxTpB8tFeJWFuf56TEN+zrvtKM1HODfke8g+ERtGeKSZgJAzlV/STpjhSr7f+WxvzrBP/THuAPUoakRYjAcIKMjrKS30yIDIr1w+kmM0wrE=
+  app: fast-anchorage-86250
+  on:
+    repo: mattpeebles/CakeAsAService

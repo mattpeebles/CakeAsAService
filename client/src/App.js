@@ -22,23 +22,6 @@ class App extends Component {
     }
   }
 
-  // componentDidMount(){
-  //   fetch('http://localhost:3030/api/design-a-cake', {
-  //       method: 'POST',
-  //       headers: {
-  //         "Content-Type": 'application/json'
-  //       },
-  //       body: JSON.stringify({
-  //         base: 'http://media.salon.com/2015/04/shutterstock_187788812.jpg', 
-  //         logo: 'https://img.utdstc.com/icons/128/lucky-patcher-android.png'
-  //       })
-  //     })
-  //     .then(res => res.json())
-  //     .then(topLeft => {
-  //       this.setState({topLeft})
-  //     })
-  // }
-
   updateImageSrc(type, src){
     if(type === 'base'){
       this.setState({baseImageSrc: src})
@@ -58,7 +41,6 @@ class App extends Component {
   }
 
   getTopLeftCoordinate(){
-     console.log(this.state)
      fetch('http://localhost:3030/api/design-a-cake', {
         method: 'POST',
         headers: {
@@ -84,41 +66,48 @@ class App extends Component {
         logoImage,
         combinedImage;
 
-    if(this.state.baseImageSrc){
-      baseImage = 
-        <ImageContainer 
-          src={this.state.baseImageSrc} 
-          updateDimensions={this.updateImageDimensions.bind(this)}
-          id="base" alt="baseImage"
-        />
-    }
+    // if(this.state.baseImageSrc){
+    //     baseImage = 
+    //       <ImageContainer 
+    //         src={this.state.baseImageSrc} 
+    //         updateDimensions={this.updateImageDimensions.bind(this)}
+    //         id="base" alt="baseImage"
+    //       />
+    // }
 
-    if(this.state.logoImageSrc){
-      logoImage = 
-        <ImageContainer 
-          src={this.state.logoImageSrc} 
-          updateDimensions={this.updateImageDimensions.bind(this)}
-          id="logo" alt="logoImage"
-        />
-    }
+    // if(this.state.logoImageSrc){
+    //     logoImage = 
+    //       <ImageContainer 
+    //         src={this.state.logoImageSrc} 
+    //         updateDimensions={this.updateImageDimensions.bind(this)}
+    //         id="logo" alt="logoImage"
+    //       />
+    // }
 
     if(this.state.topLeft && this.state.baseDimensions && this.state.logoDimensions && !this.state.canvas){
-      combinedImage = <Canvas baseDimensions={this.state.baseDimensions} topLeft={this.state.topLeft}/>
+        combinedImage = <Canvas baseDimensions={this.state.baseDimensions} topLeft={this.state.topLeft}/>
     }
 
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Design A Cake</h1>
+          <ImageForm 
+              baseSrc={this.state.baseImageSrc}
+              logoSrc={this.state.logoImageSrc}
+              getCoordinate={this.getTopLeftCoordinate.bind(this)} 
+              updateSrc={this.updateImageSrc.bind(this)}
+              updateDimensions={this.updateImageDimensions.bind(this)}
+          />
         </header>
-        <ImageForm 
-            getCoordinate={this.getTopLeftCoordinate.bind(this)} 
-            updateSrc={this.updateImageSrc.bind(this)}
-        />
-        {baseImage}
-        {logoImage}
+      
+        <div className="row">
+          {baseImage}
+          {logoImage}
+        </div>
+
         {combinedImage}
+
       </div>
     );
   }

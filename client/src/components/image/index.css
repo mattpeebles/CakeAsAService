@@ -1,3 +1,10 @@
+.imageContainer{
+	padding: 15px 0px;
+	height: 250px;
+	display: inline-block;
+	box-sizing: border-box;
+	text-align: center;
+}
 .image{
 	max-width: 250px;
 }

@@ -63,10 +63,9 @@ export default class ImageContainer extends Component{
 	render(){
 		if(this.state.validSrc && this.state.dimensions){
 			return(
-				<div className="ImageContainer">
-					<h2>{this.props.id} Image</h2>
-					<p>Size: {this.state.dimensions.width}x{this.state.dimensions.height}</p>
+				<div className="imageContainer col">
 					<img src={this.props.src} id={this.props.id} className="image" alt={this.props.alt}/>
+					<p>Size: {this.state.dimensions.width}x{this.state.dimensions.height}</p>
 				</div>
 			)
 		}

@@ -6,7 +6,7 @@ const {PORT: port} = require('./config')
 const cakeRoute = require('./routers/cake')
 
 
-app.use(express.static('public'))
+app.use(express.static(path.join(__dirname, 'client/build')))
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');

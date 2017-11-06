@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 
+import './index.css'
+
 export default class Canvas extends Component{
 	constructor(props){
 		super(props)
@@ -10,7 +12,7 @@ export default class Canvas extends Component{
 
 	componentDidMount(){
 		if(!this.state.drawnImage){
-	        let canvas = document.getElementById('c')
+	        let canvas = document.getElementById('cakeCanvas')
 	        let ctx = canvas.getContext('2d')
 	        
 	        ctx.canvas.width = this.props.baseDimensions.width
@@ -29,7 +31,7 @@ export default class Canvas extends Component{
 
 	render(){
 		return(
-			<canvas id="c"></canvas>
+			<canvas id="cakeCanvas"></canvas>
 		)
 	}
 }
