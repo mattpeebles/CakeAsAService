@@ -18,6 +18,8 @@ The middleware is contained in index.js, the router is contained in the route fo
 On the backend, node.js and Express were used. The main reason I used these frameworks is because I'm extremely familiar with node and like the wealth of libraries npm makes available.
 
 ## References
+Getting image size on front end - https://stackoverflow.com/a/20569043/8454047
+
 
 ## cURL command
 curl 

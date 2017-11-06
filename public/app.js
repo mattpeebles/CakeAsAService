@@ -6,6 +6,7 @@ function fetchTopLeftCoordinate(base, logo){
 		},
 		body: JSON.stringify({base, logo})
 	})
+
 }
 
 function onImageFormSubmit(){
@@ -25,6 +26,9 @@ function getTopLeftCoordinate(){
 				return res.json()
 			}).then(data => {
 				resolve(data)
+			})
+			.catch(e => {
+				console.log(e)
 			})
 	})
 };
@@ -90,6 +94,9 @@ function drawFinishedImage(){
 							})
 						})
 				})
+		})
+		.catch(e => {
+			console.log(e)
 		})
 }
 
