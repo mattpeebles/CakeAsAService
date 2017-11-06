@@ -19,6 +19,7 @@ On the backend, node.js and Express were used. The main reason I used these fram
 
 ## References
 Getting image size on front end - https://stackoverflow.com/a/20569043/8454047
+Integrating Express and React on Heroku - https://daveceddia.com/create-react-app-express-production/
 
 
 ## cURL command
