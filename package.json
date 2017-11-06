@@ -4,7 +4,7 @@
   "description": "cake as a service api design",
   "main": "server.js",
   "scripts": {
-    "test": "mocha -g 'POST' --exit",
+    "test": "mocha --exit",
     "start": "node server.js",
     "dev": "nodemon server.js"
   },

@@ -3,8 +3,8 @@ const chaiPromise = require('chai-as-promised')
 const {expect, should, assert} = chai;
 chai.use(chaiPromise)
 
-const {	canContain, centerLogo, getSizeFromImageUrl, getSizeFromImage, isCentered,
-	calculateArea, calculateTopLeftXPos, calculateTopLeftYPos, rotateImage} = require('../index');
+const {	canContain, centerLogo, getSizeFromImageUrl, //getSizeFromImage 
+	isCentered, calculateArea, calculateTopLeftXPos, calculateTopLeftYPos, rotateImage} = require('../index');
 
 let image1Url = 'http://media.salon.com/2015/04/shutterstock_187788812.jpg',
  	image2Url = 'https://img.utdstc.com/icons/128/lucky-patcher-android.png';
@@ -42,9 +42,9 @@ describe('Index', () => {
 		//TODO: WRITE REJECTION TESTS
 	});
 
-	describe('getSizeFromImage', () => {
+	// describe('getSizeFromImage', () => {
 
-	});
+	// });
 
 	describe('canContain', () => {
 		it('should return true and dimension data if base can contain logo', () => {

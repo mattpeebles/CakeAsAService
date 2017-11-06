@@ -59,20 +59,20 @@ function getSizeFromImageUrl(imageUrl){
 	})
 }
 
-function getSizeFromImage(imageLocation){
-	return new Promise((resolve, reject) => {
-		let dimensions = sizeOf(imageLocation)
-		let {height, width} = dimensions
+// function getSizeFromImage(imageLocation){
+// 	return new Promise((resolve, reject) => {
+// 		let dimensions = sizeOf(imageLocation)
+// 		let {height, width} = dimensions
 		
-		let area = calculateArea(width, height)
+// 		let area = calculateArea(width, height)
 
-		return resolve({
-			width,
-			height,
-			area	
-		})	
-	})
-}
+// 		return resolve({
+// 			width,
+// 			height,
+// 			area	
+// 		})	
+// 	})
+// }
 
 function calculateArea(width, height){
 	return width * height
@@ -80,8 +80,12 @@ function calculateArea(width, height){
 
 function canContain(base, logo){
 	
-	let getBaseImageSize = ((/https?/).test(base)) ? getSizeFromImageUrl(base) : getSizeFromImage(base),
-		getLogoImageSize = ((/https?/).test(logo)) ? getSizeFromImageUrl(logo) : getSizeFromImage(logo);
+	// let getBaseImageSize = ((/https?/).test(base)) ? getSizeFromImageUrl(base) : getSizeFromImage(base),
+	// 	getLogoImageSize = ((/https?/).test(logo)) ? getSizeFromImageUrl(logo) : getSizeFromImage(logo);
+
+
+	let getBaseImageSize = getSizeFromImageUrl(base),
+		getLogoImageSize = getSizeFromImageUrl(logo);
 
 	return new Promise((resolve, reject) => {
 		getBaseImageSize
@@ -177,7 +181,7 @@ module.exports = {
 	canContain, 
 	centerLogo,
 	getSizeFromImageUrl,
-	getSizeFromImage,
+	//getSizeFromImage,
 	calculateArea,
 	calculateTopLeftXPos,
 	calculateTopLeftYPos,
