@@ -8,6 +8,10 @@ function getSizeFromImageUrl(imageUrl){
 
 	let protocolType = imgUrl.protocol
 
+	if(protocolType === null){
+		return null
+	}
+
 	return new Promise((resolve, reject) => {
 		if(protocolType == 'http:'){
 			return http.get(imgUrl, (res) => {
@@ -49,7 +53,8 @@ function getSizeFromImageUrl(imageUrl){
 			}).on('end', () => {
 				console.log('Stream ended')
 			})
-		} else{
+		} 
+		else{
 			return https.get(imgUrl, (res) => {
 				let totalChunk;
 				let length = 0;
@@ -103,6 +108,11 @@ function canContain(base, logo){
 		getLogoImageSize = getSizeFromImageUrl(logo);
 
 	return new Promise((resolve, reject) => {
+		
+		if(getBaseImageSize == null || getLogoImageSize == null){
+			resolve({possible: false})
+		}
+
 		getBaseImageSize
 			.then(baseDimensions => {
 				getLogoImageSize
@@ -119,11 +129,8 @@ function canContain(base, logo){
 							resolve({possible: false})
 						}
 				})
-				.catch(e => {
-					return reject(e)
-				})
 			}).catch(e => {
-				return reject(e)
+				resolve({possible: false})
 			})
 	})
 }
