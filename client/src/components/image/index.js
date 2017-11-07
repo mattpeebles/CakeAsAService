@@ -24,6 +24,9 @@ export default class ImageContainer extends Component{
 	componentWillReceiveProps(nextProps){
 		if(nextProps.src !== null && nextProps.src !== this.props.src){
 			this.validImage(nextProps.src)
+			this.setState({
+				dimensions: null
+			})
 		}
 	}
 
@@ -52,7 +55,6 @@ export default class ImageContainer extends Component{
 	};
 
 	validImage(src){
-		console.log(src)
 
 		fetch(src)
 			.then(res => {

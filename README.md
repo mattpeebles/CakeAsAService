@@ -23,6 +23,4 @@ Integrating Express and React on Heroku - https://daveceddia.com/create-react-ap
 
 
 ## cURL command
-curl 
-	-H "Content-Type: application/json" 
-	-d '{"base":"`BASE-IMAGE-URL`", "logo":"`LOGO-IMAGE-URL`"}' http://localhost:3000/api/design-a-cake
+curl -H "Content-Type: application/json" -d '{"base":"`BASE-IMAGE-URL`", "logo":"`LOGO-IMAGE-URL`"}' https://fast-anchorage-86250.herokuapp.com/api/design-a-cake

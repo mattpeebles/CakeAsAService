@@ -14,6 +14,7 @@ export default class ImageForm extends Component{
 	}
 
 	submitImages(e){
+		console.log('hi')
 		e.preventDefault()
 		this.props.getCoordinate()
 	}

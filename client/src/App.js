@@ -16,7 +16,8 @@ class App extends Component {
       baseDimensions: null,
       logoDimensions: null,
       canvas: false,
-      updatedCanvas: false
+      updatedCanvas: false,
+      canCombine: null
     }
   }
 
@@ -51,7 +52,10 @@ class App extends Component {
       })
       .then(res => res.json())
       .then(topLeft => {
-        this.setState({topLeft})
+        this.setState({topLeft, canCombine: true})
+      })
+      .catch(e => {
+        this.setState({canCombine: false})
       })
   }
 
@@ -63,6 +67,10 @@ class App extends Component {
 
     if(this.state.topLeft && this.state.baseDimensions && this.state.logoDimensions && !this.state.canvas){
         combinedImage = <Canvas baseDimensions={this.state.baseDimensions} topLeft={this.state.topLeft}/>
+    }
+
+    if(this.state.canCombine === false){
+      console.log('errroorrr')
     }
 
     return (
