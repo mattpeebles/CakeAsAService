@@ -37,8 +37,8 @@ describe('Cake Router', () => {
 					.then(res => {
 						res.should.have.status(200)
 						res.should.be.json
-						res.body.x.should.be.a('number')
-						res.body.y.should.be.a('number')
+						res.body.placement.x.should.be.a('number')
+						res.body.placement.y.should.be.a('number')
 					})
 			});
 			it('should return status 400 if base cannot contain logo', () => {
@@ -82,7 +82,7 @@ describe('Cake Router', () => {
 						e.should.have.status(400)
 					})						
 			})
-			it('should retrn status 400 if input is not a URL', () => {
+			it('should return status 400 if input is not a URL', () => {
 				let data = {
 					base: image1Url,
 					logo: 'cheese'

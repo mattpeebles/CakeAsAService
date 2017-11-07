@@ -65,7 +65,7 @@ class App extends Component {
   }
 
   getTopLeftCoordinate(){
-     fetch('https://fast-anchorage-86250.herokuapp.com/api/design-a-cake', {
+     fetch('http://localhost:3030/api/design-a-cake', {
         method: 'POST',
         headers: {
           "Content-Type": 'application/json'
@@ -76,7 +76,8 @@ class App extends Component {
         })
       })
       .then(res => res.json())
-      .then(topLeft => {
+      .then(data => {
+        let {placement: topLeft} = data
         this.setState({
           topLeft, 
           canCombine: true
