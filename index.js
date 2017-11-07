@@ -22,88 +22,105 @@ function getSizeFromImageUrl(imageUrl){
 		return null
 	}
 
+	let obtainedSize = false;
+
 	return new Promise((resolve, reject) => {
 		if(protocolType == 'http:'){
-			return http.get(imgUrl, (res) => {
+			return http.request(imgUrl, (res) => {
 				let totalChunk;
 				let length = 0;
 				res.on('data', (chunk) => {
-					length += chunk.length;
-					let newBuffer = new Buffer(length)
+					if(obtainedSize == false){
+						length += chunk.length;
+						let newBuffer = new Buffer(length)
 
-					if(!totalChunk){
-						totalChunk = new Buffer(chunk.length)
-						chunk.copy(totalChunk, 0)
-					}
-
-					totalChunk.copy(newBuffer, 0)
-					totalChunk = newBuffer;
-
-					let dimensions;
-
-					try{
-						dimensions = sizeOf(totalChunk)
-						
-						if(dimensions){
-							let {height, width} = dimensions
-							let area = calculateArea(width, height)
-							console.log('Obtained size')
-							res.destroy()
-							return resolve({
-									width,
-									height,
-									area	
-								})
+						if(!totalChunk){
+							totalChunk = new Buffer(chunk.length)
+							chunk.copy(totalChunk, 0)
 						}
-					}catch(e){
-						console.log(e)
-						reject(e)
+
+						totalChunk.copy(newBuffer, 0)
+						totalChunk = newBuffer;
+
+						let dimensions;
+
+						try{
+							dimensions = sizeOf(totalChunk)
+							
+							if(dimensions){
+								let {height, width} = dimensions
+								let area = calculateArea(width, height)
+								console.log('Obtained size')
+								obtainedSize = true
+								return resolve({
+										width,
+										height,
+										area	
+									})
+							}
+						}catch(e){
+							console.log(e)
+							reject(e)
+						}
 					}
 				})
-			}).on('end', () => {
+			})
+			.on('error', (err) => {
+				console.log(err)
+			})
+			.on('end', () => {
 				console.log('Stream ended')
 			})
+			.end()
 		} 
 		else{
-			return https.get(imgUrl, (res) => {
+			return https.request(imgUrl, (res) => {
+				
 				let totalChunk;
 				let length = 0;
 				res.on('data', (chunk) => {
-					length += chunk.length;
-					let newBuffer = new Buffer(length)
+					if(!obtainedSize){
+						length += chunk.length;
+						let newBuffer = new Buffer(length)
 
-					if(!totalChunk){
-						totalChunk = new Buffer(chunk.length)
-						chunk.copy(totalChunk, 0)
-					}
-
-					totalChunk.copy(newBuffer, 0)
-					totalChunk = newBuffer;
-
-					let dimensions;
-
-					try{
-						dimensions = sizeOf(totalChunk)
-						
-						if(dimensions){
-							let {height, width} = dimensions
-							let area = calculateArea(width, height)
-							res.destroy()
-							console.log('Obtained size')
-							return resolve({
-									width,
-									height,
-									area	
-								})
+						if(!totalChunk){
+							totalChunk = new Buffer(chunk.length)
+							chunk.copy(totalChunk, 0)
 						}
-					}catch(e){
-						console.log(e)
-						reject(e)
+
+						totalChunk.copy(newBuffer, 0)
+						totalChunk = newBuffer;
+
+						let dimensions;
+
+						try{
+							dimensions = sizeOf(totalChunk)
+							
+							if(dimensions){
+								let {height, width} = dimensions
+								let area = calculateArea(width, height)
+								console.log('Obtained size')
+								obtainedSize = true
+								return resolve({
+										width,
+										height,
+										area	
+									})
+							}
+						}catch(e){
+							console.log(e)
+							reject(e)
+						}
 					}
 				})
-			}).on('end', () => {
+			})
+			.on('end', () => {
 				console.log('Stream ended')
 			})
+			.on('error', (err) => {
+				console.log(err)
+			})
+			.end()
 		} 
 	})
 }

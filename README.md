@@ -41,7 +41,10 @@ curl -H "Content-Type: application/json" -d '{"base":"`BASE-IMAGE-URL`", "logo":
 The backend and frontend are independent and do not need each other to function properly.
 
 ### Backend
-After downloading repo to your local machine, run `npm init` and `npm start`. If you'd like to further develop it, I recommend `npm run dev` to have the server automatically refresh on changes.
+After downloading the repo to your local machine, run `npm init` and `npm start`. If you'd like to further develop it, I recommend `npm run dev` to have the server automatically refresh on changes. You can then make curl requests to 
+curl -H "Content-Type: application/json" -d '{"base":"`BASE-IMAGE-URL`", "logo":"`LOGO-IMAGE-URL`"}' http://localhost:3030/api/design-a-cake
 
 ### Frontend
-After downloading rep to your local machine, `cd` into `client` and run `npm init` and `npm start`. This will start the react client which will automatically open on localhost:3000.
+After downloading the repo to your local machine, `cd` into `client` and run `npm init` and `npm start`. This will start the react client which will automatically open on localhost:3000.
+
+If you'd like to concurrently develop the front and backend, change the proxy in `client/package.json` to `http://localhost:3030` and change the `fetch` url in the `getTopLeftCoordinate` function in `client/App.js`.
