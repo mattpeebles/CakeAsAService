@@ -65,7 +65,7 @@ class App extends Component {
   }
 
   getTopLeftCoordinate(){
-     fetch('http://localhost:3030/api/design-a-cake', {
+     fetch('https://fast-anchorage-86250.herokuapp.com/api/design-a-cake', {
         method: 'POST',
         headers: {
           "Content-Type": 'application/json'
