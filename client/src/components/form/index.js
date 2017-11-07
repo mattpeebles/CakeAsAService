@@ -4,9 +4,6 @@ import React, {Component} from 'react'
 import ImageContainer from '../image'
 
 export default class ImageForm extends Component{
-	constructor(props){
-		super(props)
-	}
 
 	updateBaseSrc(){
 		this.props.updateSrc('base', this.baseSrc.value)
@@ -24,9 +21,9 @@ export default class ImageForm extends Component{
 	render(){
 		return(
 			<form id="imageForm" onSubmit={(e) => this.submitImages(e)}>
-				<div class="form-row">
+				<div className="form-row">
 					<div className="form-group  col-md-6">
-						<label for="baseInput">Base Image</label>
+						<label htmlFor="baseInput">Base Image</label>
 						<input 
 							type="text" 
 							className="form-control" 
@@ -42,7 +39,7 @@ export default class ImageForm extends Component{
 				         />
 					</div>
 					<div className="form-group col-md-6">
-						<label for="logoInput">Logo Image</label>
+						<label htmlFor="logoInput">Logo Image</label>
 						<input 
 							type="text" 
 							name="logoImage" 
@@ -58,7 +55,7 @@ export default class ImageForm extends Component{
 			          />
 					</div>
 				</div>
-					<button type="submit" class="btn btn-primary" id="submit">Design the Cake</button>
+					<button type="submit" className="btn btn-primary" id="submit">Design the Cake</button>
 			</form>
 		)
 	}

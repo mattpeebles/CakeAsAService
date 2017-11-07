@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 
 
 import ImageForm from './components/form'
-import ImageContainer from './components/image'
 import Canvas from './components/canvas'
 
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -41,7 +39,7 @@ class App extends Component {
   }
 
   getTopLeftCoordinate(){
-     fetch('http://localhost:3030/api/design-a-cake', {
+     fetch('https://fast-anchorage-86250.herokuapp.com/api/design-a-cake', {
         method: 'POST',
         headers: {
           "Content-Type": 'application/json'
@@ -53,7 +51,6 @@ class App extends Component {
       })
       .then(res => res.json())
       .then(topLeft => {
-        console.log(topLeft)
         this.setState({topLeft})
       })
   }
@@ -62,27 +59,7 @@ class App extends Component {
 
   render() {
 
-    let baseImage,
-        logoImage,
-        combinedImage;
-
-    // if(this.state.baseImageSrc){
-    //     baseImage = 
-    //       <ImageContainer 
-    //         src={this.state.baseImageSrc} 
-    //         updateDimensions={this.updateImageDimensions.bind(this)}
-    //         id="base" alt="baseImage"
-    //       />
-    // }
-
-    // if(this.state.logoImageSrc){
-    //     logoImage = 
-    //       <ImageContainer 
-    //         src={this.state.logoImageSrc} 
-    //         updateDimensions={this.updateImageDimensions.bind(this)}
-    //         id="logo" alt="logoImage"
-    //       />
-    // }
+    let combinedImage;
 
     if(this.state.topLeft && this.state.baseDimensions && this.state.logoDimensions && !this.state.canvas){
         combinedImage = <Canvas baseDimensions={this.state.baseDimensions} topLeft={this.state.topLeft}/>
@@ -100,11 +77,6 @@ class App extends Component {
               updateDimensions={this.updateImageDimensions.bind(this)}
           />
         </header>
-      
-        <div className="row">
-          {baseImage}
-          {logoImage}
-        </div>
 
         {combinedImage}
 

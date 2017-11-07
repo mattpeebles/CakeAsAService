@@ -15,11 +15,16 @@ export default class ImageContainer extends Component{
 
 	componentDidMount(){
 		this.setState({imageId: this.props.id})
-		this.validImage(this.props.src)
+		
+		if(this.props.src !== null){
+			this.validImage(this.props.src)
+		}
 	}
 
 	componentWillReceiveProps(nextProps){
-		this.validImage(nextProps.src)
+		if(nextProps.src !== null && nextProps.src !== this.props.src){
+			this.validImage(nextProps.src)
+		}
 	}
 
 	componentDidUpdate(){
@@ -47,6 +52,8 @@ export default class ImageContainer extends Component{
 	};
 
 	validImage(src){
+		console.log(src)
+
 		fetch(src)
 			.then(res => {
 				this.setState({validSrc: res.ok})
