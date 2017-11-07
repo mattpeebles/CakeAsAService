@@ -68,7 +68,7 @@ function getSizeFromImageUrl(imageUrl){
 			.on('error', (err) => {
 				console.log(err)
 			})
-			.on('end', () => {
+			.on('close', () => {
 				console.log('Stream ended')
 			})
 			.end()
@@ -99,7 +99,7 @@ function getSizeFromImageUrl(imageUrl){
 							if(dimensions){
 								let {height, width} = dimensions
 								let area = calculateArea(width, height)
-								console.log('Obtained size')
+								console.log(`Obtained size of: $img{}`)
 								obtainedSize = true
 								return resolve({
 										width,
@@ -114,7 +114,7 @@ function getSizeFromImageUrl(imageUrl){
 					}
 				})
 			})
-			.on('end', () => {
+			.on('close', () => {
 				console.log('Stream ended')
 			})
 			.on('error', (err) => {
