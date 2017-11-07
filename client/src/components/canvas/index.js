@@ -30,8 +30,21 @@ export default class Canvas extends Component{
 
 	        let backgroundImage = document.getElementById('base')
 	        let logo = document.getElementById('logo')
-	        ctx.drawImage(backgroundImage, 0, 0)
-	        ctx.drawImage(logo, this.props.topLeft.x, this.props.topLeft.y) 
+	        	        
+			ctx.drawImage(backgroundImage, 0, 0)
+
+	        if(this.props.rotate){
+	        	ctx.clearRect(0,0, canvas.width, canvas.height)
+	        	ctx.canvas.width = this.props.baseDimensions.height
+	        	ctx.canvas.height = this.props.baseDimensions.width
+	        	ctx.save()
+	        	ctx.translate(canvas.width/2, canvas.height/2);
+	        	ctx.rotate(90*Math.PI/180)
+	        	ctx.drawImage(backgroundImage, -this.props.baseDimensions.width/2, -this.props.baseDimensions.height/2)
+	       		ctx.restore()
+	        }
+
+	       	ctx.drawImage(logo, this.props.topLeft.x, this.props.topLeft.y)
 
 	        this.setState({
 	        	drawImage: true

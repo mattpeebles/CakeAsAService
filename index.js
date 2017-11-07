@@ -11,81 +11,93 @@ function getSizeFromImageUrl(imageUrl){
 	return new Promise((resolve, reject) => {
 		if(protocolType == 'http:'){
 			return http.get(imgUrl, (res) => {
-				let chunks = [];
-				let kbDownloaded = 0;
+				let totalChunk;
+				let length = 0;
 				res.on('data', (chunk) => {
-					kbDownloaded += Buffer.byteLength(chunk)
-					chunks.push(chunk)
-					
-					if(kbDownloaded >= 3000){
-						let buffer = Buffer.concat(chunks)
-						let dimensions = sizeOf(buffer)
-						let {height, width} = dimensions
-						
-						let area = calculateArea(width, height)
+					length += chunk.length;
+					let newBuffer = new Buffer(length)
 
-						return resolve({
-							width,
-							height,
-							area	
-						})
+					if(!totalChunk){
+						totalChunk = new Buffer(chunk.length)
+						chunk.copy(totalChunk, 0)
+					}
+
+					totalChunk.copy(newBuffer, 0)
+					totalChunk = newBuffer;
+
+					let dimensions;
+
+					try{
+						dimensions = sizeOf(totalChunk)
+						
+						if(dimensions){
+							let {height, width} = dimensions
+							let area = calculateArea(width, height)
+							console.log('Obtained size')
+							res.destroy()
+							return resolve({
+									width,
+									height,
+									area	
+								})
+						}
+					}catch(e){
+						console.log(e)
+						reject(e)
 					}
 				})
-				// .on('end', () => {
-				// 	console.log()
-				// })
+			}).on('end', () => {
+				console.log('Stream ended')
 			})
 		} else{
 			return https.get(imgUrl, (res) => {
-				let chunks = [];
-				let kbDownloaded = 0;
-				res.on('data', (chunk) => { 
-					kbDownloaded += Buffer.byteLength(chunk)
-					chunks.push(chunk)
-					
-					if(kbDownloaded >= 3000){
-						let buffer = Buffer.concat(chunks)
-						let dimensions = sizeOf(buffer)
-						let {height, width} = dimensions
-						
-						let area = calculateArea(width, height)
+				let totalChunk;
+				let length = 0;
+				res.on('data', (chunk) => {
+					length += chunk.length;
+					let newBuffer = new Buffer(length)
 
-						return resolve({
-							width,
-							height,
-							area	
-						})
+					if(!totalChunk){
+						totalChunk = new Buffer(chunk.length)
+						chunk.copy(totalChunk, 0)
+					}
+
+					totalChunk.copy(newBuffer, 0)
+					totalChunk = newBuffer;
+
+					let dimensions;
+
+					try{
+						dimensions = sizeOf(totalChunk)
+						
+						if(dimensions){
+							let {height, width} = dimensions
+							let area = calculateArea(width, height)
+							res.destroy()
+							console.log('Obtained size')
+							return resolve({
+									width,
+									height,
+									area	
+								})
+						}
+					}catch(e){
+						console.log(e)
+						reject(e)
 					}
 				})
+			}).on('end', () => {
+				console.log('Stream ended')
 			})
-		}
+		} 
 	})
 }
-
-// function getSizeFromImage(imageLocation){
-// 	return new Promise((resolve, reject) => {
-// 		let dimensions = sizeOf(imageLocation)
-// 		let {height, width} = dimensions
-		
-// 		let area = calculateArea(width, height)
-
-// 		return resolve({
-// 			width,
-// 			height,
-// 			area	
-// 		})	
-// 	})
-// }
 
 function calculateArea(width, height){
 	return width * height
 }
 
 function canContain(base, logo){
-	
-	// let getBaseImageSize = ((/https?/).test(base)) ? getSizeFromImageUrl(base) : getSizeFromImage(base),
-	// 	getLogoImageSize = ((/https?/).test(logo)) ? getSizeFromImageUrl(logo) : getSizeFromImage(logo);
-
 
 	let getBaseImageSize = getSizeFromImageUrl(base),
 		getLogoImageSize = getSizeFromImageUrl(logo);
@@ -184,7 +196,6 @@ module.exports = {
 	canContain, 
 	centerLogo,
 	getSizeFromImageUrl,
-	//getSizeFromImage,
 	calculateArea,
 	calculateTopLeftXPos,
 	calculateTopLeftYPos,

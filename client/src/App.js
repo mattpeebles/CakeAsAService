@@ -17,7 +17,8 @@ class App extends Component {
       logoDimensions: null,
       canvas: false,
       updatedCanvas: false,
-      canCombine: null
+      canCombine: null,
+      rotate: false
     }
   }
 
@@ -44,6 +45,18 @@ class App extends Component {
     }
     else if(type === 'logo'){
       this.setState({logoDimensions: dimensions})
+    }
+
+    if(this.state.baseDimensions && this.state.logoDimensions){
+      if(this.state.baseDimensions.width < this.state.logoDimensions.width){
+        this.setState({
+          rotate: true
+        })
+      }
+    }else{
+      this.setState({
+        rotate: false
+      })
     }
   }
 
@@ -74,7 +87,7 @@ class App extends Component {
     let combinedImage;
 
     if(this.state.topLeft && this.state.baseDimensions && this.state.logoDimensions && !this.state.canvas){
-        combinedImage = <Canvas baseDimensions={this.state.baseDimensions} baseSrc={this.state.baseImageSrc} topLeft={this.state.topLeft}/>
+        combinedImage = <Canvas rotate={this.state.rotate} baseDimensions={this.state.baseDimensions} baseSrc={this.state.baseImageSrc} topLeft={this.state.topLeft}/>
     }
 
     // if(this.state.canCombine === false){
