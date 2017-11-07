@@ -19,6 +19,22 @@ export default class ImageForm extends Component{
 	}
 
 	render(){
+		let baseImage,
+			logoImage;
+
+		if(this.props.show){
+			baseImage = <ImageContainer 
+				            src={this.props.baseSrc} 
+				            updateDimensions={this.props.updateDimensions}
+				            id="base" alt="baseImage"
+				         />;
+			logoImage = <ImageContainer 
+			            src={this.props.logoSrc} 
+			            updateDimensions={this.props.updateDimensions}
+			            id="logo" alt="logoImage"
+			          />
+		}
+
 		return(
 			<form id="imageForm" onSubmit={(e) => this.submitImages(e)}>
 				<div className="form-row">
@@ -32,11 +48,7 @@ export default class ImageForm extends Component{
 							ref={(input) => {this.baseSrc = input;}} 
 							onChange={() => this.updateBaseSrc()} 
 						/>
-						<ImageContainer 
-				            src={this.props.baseSrc} 
-				            updateDimensions={this.props.updateDimensions}
-				            id="base" alt="baseImage"
-				         />
+						{baseImage}
 					</div>
 					<div className="form-group col-md-6">
 						<label htmlFor="logoInput">Logo Image</label>
@@ -48,11 +60,7 @@ export default class ImageForm extends Component{
 							ref={(input) => {this.logoSrc = input}} 
 							onChange={() => this.updateLogoSrc()} 
 						/>
-			          <ImageContainer 
-			            src={this.props.logoSrc} 
-			            updateDimensions={this.props.updateDimensions}
-			            id="logo" alt="logoImage"
-			          />
+						{logoImage}
 					</div>
 				</div>
 					<button type="submit" className="btn btn-primary" id="submit">Design the Cake</button>

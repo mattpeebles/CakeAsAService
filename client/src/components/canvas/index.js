@@ -13,11 +13,13 @@ export default class Canvas extends Component{
 
 	componentDidMount(){
 		this.drawImage()
+		this.props.hideFormImages()
 	}
 
 	componentDidUpdate(nextProps){
 		if(nextProps.baseSrc !== this.props.baseSrc){
 			this.drawImage()
+			this.props.hideFormImages()
 		}
 	}
 
@@ -49,7 +51,9 @@ export default class Canvas extends Component{
 	        this.setState({
 	        	drawImage: true
 	        })
+
 	}
+
 	render(){
 		return(
 			<canvas id="cakeCanvas"></canvas>

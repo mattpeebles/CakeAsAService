@@ -11,6 +11,7 @@ class App extends Component {
     super(props);
     this.state = {
       topLeft: null,
+      showUncombinedImages: true,
       baseImageSrc: null,
       logoImageSrc: null,
       baseDimensions: null,
@@ -27,14 +28,16 @@ class App extends Component {
       this.setState({
         baseImageSrc: src,
         baseDimensions: null,
-        topLeft: null
+        topLeft: null,
+        showUncombinedImages: true,
       })
     }
     else if(type === 'logo'){
       this.setState({
         logoImageSrc: src,
         logoDimensions: null,
-        topLeft: null
+        topLeft: null,
+        showUncombinedImages: true
       })
     }
   }
@@ -73,26 +76,39 @@ class App extends Component {
       })
       .then(res => res.json())
       .then(topLeft => {
-        this.setState({topLeft, canCombine: true})
+        this.setState({
+          topLeft, 
+          canCombine: true
+        })
       })
       .catch(e => {
         this.setState({canCombine: false})
       })
   }
 
-
+  hideFormImages(){
+    this.setState({
+      showUncombinedImages: false
+    })
+  }
 
   render() {
 
     let combinedImage;
 
     if(this.state.topLeft && this.state.baseDimensions && this.state.logoDimensions && !this.state.canvas){
-        combinedImage = <Canvas rotate={this.state.rotate} baseDimensions={this.state.baseDimensions} baseSrc={this.state.baseImageSrc} topLeft={this.state.topLeft}/>
+        combinedImage = <Canvas 
+                          rotate={this.state.rotate} 
+                          baseDimensions={this.state.baseDimensions} 
+                          baseSrc={this.state.baseImageSrc} 
+                          topLeft={this.state.topLeft}
+                          hideFormImages={this.hideFormImages.bind(this)}
+                        />
     }
 
-    // if(this.state.canCombine === false){
-    //   console.log('errroorrr')
-    // }
+    if(this.state.canCombine === false){
+      combinedImage = <p>'No cake for you'</p>
+    }
 
     return (
       <div className="App">
@@ -104,6 +120,7 @@ class App extends Component {
               getCoordinate={this.getTopLeftCoordinate.bind(this)} 
               updateSrc={this.updateImageSrc.bind(this)}
               updateDimensions={this.updateImageDimensions.bind(this)}
+              show={this.state.showUncombinedImages}
           />
         </header>
 
