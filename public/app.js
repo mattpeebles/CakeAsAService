@@ -1,5 +1,5 @@
 function fetchTopLeftCoordinate(base, logo){
-	return fetch('http://localhost:3030/api/design-a-cake', {
+	return fetch('https://fast-anchorage-86250.herokuapp.com/', {
 		method: 'POST',
 		headers: {
 			"Content-Type": 'application/json'
