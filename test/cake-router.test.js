@@ -11,7 +11,9 @@ const should = chai.should()
 describe('Cake Router', () => {
 	
 	let image1Url = 'http://media.salon.com/2015/04/shutterstock_187788812.jpg',
- 		image2Url = 'https://img.utdstc.com/icons/128/lucky-patcher-android.png';
+ 		image2Url = 'https://img.utdstc.com/icons/128/lucky-patcher-android.png',
+ 		badImageUrl1 = 'http://media.salon.om/2015/04/shutterstock_187788812.jpg',
+ 		badImage1 = 'http://media.salon.com/2015/04/shutterstock_187788812.jp'
 
 	before(function () {
 		runServer()
@@ -21,8 +23,8 @@ describe('Cake Router', () => {
 		closeServer()
 	})
 
-	describe('POST', () => {
-		describe('/api/design-a-cake', () => {
+	describe('/api/design-a-cake', () => {
+		describe('POST', () => {
 			it('should return the coordinates of the top left corner of the logo', () => {
 				let data = {
 					base: image1Url,
@@ -38,7 +40,7 @@ describe('Cake Router', () => {
 						res.body.x.should.be.a('number')
 						res.body.y.should.be.a('number')
 					})
-			})
+			});
 			it('should return status 400 if base cannot contain logo', () => {
 				let data = {
 					base: image2Url,
@@ -47,12 +49,51 @@ describe('Cake Router', () => {
 				return chai.request(app)
 					.post('/api/design-a-cake')
 					.send(data)
-					.then(res => {
-						res.should.have.property('status', 400)
-					})
+					.then(res => {})
 					.catch(e => {
 						e.should.have.status(400)
 					})
+			});
+			it('should return status 400 if input is a bad URL', () => {
+				let data = {
+					base:badImageUrl1,
+					logo: image2Url
+				}
+
+				return chai.request(app)
+					.post('/api/design-a-cake')
+					.send(data)
+					.then(res => {})
+					.catch(e => {
+						e.should.have.status(400)
+					})			
+			});
+			it('should return status 400 if input is not an image url', () => {
+				let data = {
+					base:badImage1,
+					logo: image2Url
+				}
+
+				return chai.request(app)
+					.post('/api/design-a-cake')
+					.send(data)
+					.then(res => {})
+					.catch(e => {
+						e.should.have.status(400)
+					})						
+			})
+			it('should retrn status 400 if input is not a URL', () => {
+				let data = {
+					base: image1Url,
+					logo: 'cheese'
+				}
+				return chai.request(app)
+					.post('/api/design-a-cake')
+					.send(data)
+					.then(res => {})
+					.catch(e => {
+						e.should.have.status(400)
+					})			
 			})
 		})
 	})
