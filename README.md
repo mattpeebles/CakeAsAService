@@ -31,7 +31,7 @@ curl -H "Content-Type: application/json" -d '{"base":"`BASE-IMAGE-URL`", "logo":
 
 ## Setup
 
-The backend and frontend are technically independent and do not need each other to function properly.
+The backend and frontend are independent and do not need each other to function properly.
 
 ### Backend
 After downloading repo to your local machine, run `npm init` and `npm start`. If you'd like to further develop it, I recommend `npm run dev` to have the server automatically refresh on changes.

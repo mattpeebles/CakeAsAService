@@ -31,6 +31,9 @@ function getSizeFromImageUrl(imageUrl){
 						})
 					}
 				})
+				// .on('end', () => {
+				// 	console.log()
+				// })
 			})
 		} else{
 			return https.get(imgUrl, (res) => {

@@ -106,6 +106,21 @@ describe('Index', () => {
 			expect(coordinate.y).to.be.a('number');
 		});
 
+		it('should rotate base if base area is larger than logo and logo width is larger than base width', () => {
+			let base = {'width': 850, 'height': 1000, 'area': 850*1000},
+				logo = {'width': 950, 'height': 950, 'area': 950*750}
+
+			let coordinate = centerLogo(base, logo)
+
+			expect(coordinate).to.be.a('object')
+			expect(coordinate).to.have.own.property('x')
+			expect(coordinate.x).to.be.a('number')
+			expect(coordinate).to.have.own.property('y')
+			expect(coordinate.y).to.be.a('number')
+			expect(base).to.have.own.property('rotated')
+			expect(base.rotated).to.be.equal(true)
+		})
+
 		it('should throw error if it cannot center', () => {
 			assert.throws(() => {centerLogo(image2Dimension, image1Dimension)}, Error, 'Logo is larger than base, cannot center')
 		})

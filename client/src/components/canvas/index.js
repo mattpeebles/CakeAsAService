@@ -4,14 +4,24 @@ import './index.css'
 
 export default class Canvas extends Component{
 	constructor(props){
-		super(props)
+		super(props);
 		this.state = {
-			drawnImage: false
+			drawImage: false
 		}
 	}
 
+
 	componentDidMount(){
-		if(!this.state.drawnImage){
+		this.drawImage()
+	}
+
+	componentDidUpdate(nextProps){
+		if(nextProps.baseSrc !== this.props.baseSrc){
+			this.drawImage()
+		}
+	}
+
+	drawImage(){
 	        let canvas = document.getElementById('cakeCanvas')
 	        let ctx = canvas.getContext('2d')
 	        
@@ -26,9 +36,7 @@ export default class Canvas extends Component{
 	        this.setState({
 	        	drawImage: true
 	        })
-		}
 	}
-
 	render(){
 		return(
 			<canvas id="cakeCanvas"></canvas>

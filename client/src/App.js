@@ -23,10 +23,18 @@ class App extends Component {
 
   updateImageSrc(type, src){
     if(type === 'base'){
-      this.setState({baseImageSrc: src})
+      this.setState({
+        baseImageSrc: src,
+        baseDimensions: null,
+        topLeft: null
+      })
     }
     else if(type === 'logo'){
-      this.setState({logoImageSrc: src})
+      this.setState({
+        logoImageSrc: src,
+        logoDimensions: null,
+        topLeft: null
+      })
     }
   }
 
@@ -66,12 +74,12 @@ class App extends Component {
     let combinedImage;
 
     if(this.state.topLeft && this.state.baseDimensions && this.state.logoDimensions && !this.state.canvas){
-        combinedImage = <Canvas baseDimensions={this.state.baseDimensions} topLeft={this.state.topLeft}/>
+        combinedImage = <Canvas baseDimensions={this.state.baseDimensions} baseSrc={this.state.baseImageSrc} topLeft={this.state.topLeft}/>
     }
 
-    if(this.state.canCombine === false){
-      console.log('errroorrr')
-    }
+    // if(this.state.canCombine === false){
+    //   console.log('errroorrr')
+    // }
 
     return (
       <div className="App">
