@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 
 import ImageForm from './components/form'
 import Canvas from './components/canvas'
+import NoCake from './components/noresult'
 
 import './App.css';
 
@@ -107,7 +108,7 @@ class App extends Component {
     }
 
     if(this.state.canCombine === false){
-      combinedImage = <p>'No cake for you'</p>
+      combinedImage = <NoCake />
     }
 
     return (

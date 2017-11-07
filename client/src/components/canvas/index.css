@@ -1,3 +1,17 @@
 #cakeCanvas{
-	width: 450px;
+	margin-top: 5%;
+	max-width: 350px;
+}
+
+@media screen and (max-width: 320px){
+	#cakeCanvas{
+		max-width: 300px;
+	}
+}
+
+@media screen and (min-width: 768px){
+	#cakeCanvas{
+		width: 450px;
+		max-width: none;
+	}
 }
