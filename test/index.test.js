@@ -39,12 +39,26 @@ describe('Index', () => {
 			})
 		});
 
-		//TODO: WRITE REJECTION TESTS
+		it('should return null for a non-url string', () => {
+			let size = getSizeFromImageUrl('cheese')
+			expect(size).to.be.equal(null)
+		})
+
+		it('should return null for an object', () => {
+			let size = getSizeFromImageUrl({'a': 1})
+			expect(size).to.be.equal(null)
+		})
+
+		it('should return null for a number', () => {
+			let size = getSizeFromImageUrl(134134)
+			expect(size).to.be.equal(null)
+		})
+
+		it('should return null for an array', () => {
+			let size = getSizeFromImageUrl([1, 2, 3, 4])
+			expect(size).to.be.equal(null)
+		})
 	});
-
-	// describe('getSizeFromImage', () => {
-
-	// });
 
 	describe('canContain', () => {
 		it('should return true and dimension data if base can contain logo', () => {

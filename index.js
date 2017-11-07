@@ -4,7 +4,17 @@ const https = require('https')
 const sizeOf = require('image-size')
 
 function getSizeFromImageUrl(imageUrl){
-	let imgUrl = url.parse(imageUrl)
+	if(typeof imageUrl !== 'string'){
+		return null
+	}
+
+	let imgUrl;
+
+	try{
+		imgUrl = url.parse(imageUrl)
+	} catch(e){
+		return null
+	}
 
 	let protocolType = imgUrl.protocol
 
